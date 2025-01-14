@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\API\AuditLogController;
 use App\Http\Controllers\API\IssueController;
 use App\Http\Controllers\API\MilestoneController;
@@ -34,9 +35,9 @@ Auth::routes();
 
 
 // Route::get('/projectfile', [ProjectFileController::class, 'index'])->name('projectfile');
-// Route::get('/taskdetail', function () {
-//     return view('task.task-detail');
-// });
+Route::get('/accessdenied', function () {
+    return view('auth.accessdenied');
+});
 
 // Route::prefix('project')->group(function () {
 //     Route::get('/', [ProjectControllerMain::class, 'index'])->name('project.index');
@@ -118,7 +119,7 @@ Route::middleware(['web', 'checkLogin'])->group(function () {
     });
 
     // Route cho Task
-    Route::get('/test/{TaskId}', [TaskControllerMain::class,'edit']);
+    Route::get('/test/{TaskId}', [TaskControllerMain::class, 'edit']);
     // Route::prefix('tasks')->group(function () {
     //     Route::get('/',[TaskControllerMain::class,'index'])->name('tasks.index');
     //     Route::get('/addtask', [TaskControllerMain::class,'create'])->name('tasks.addtask');
@@ -147,10 +148,10 @@ Route::middleware(['web', 'checkLogin'])->group(function () {
         Route::get('/detail/{TaskId}', [TaskControllerMain::class, 'detail'])->name('tasks.detail');
         Route::get('/edit/{TaskId}', [TaskControllerMain::class, 'edit'])->name('tasks.edit');
         Route::post('/create', [TaskControllerMain::class, 'store'])->name('tasks.create');
-    
+
         Route::post('/update-field', [TaskControllerMain::class, 'updateField'])->name('tasks.updateField');
         Route::post('/update/{id}', [TaskControllerMain::class, 'update'])->name('tasks.update');
-    
+        Route::delete('/{id}', [TaskControllerMain::class, 'destroy'])->name('tasks.delete');
         // Member routes
         Route::get('/members/{TaskId}', [TaskControllerMain::class, 'members'])->name('tasks.members');
         Route::get('/addmember/{TaskId}', [TaskControllerMain::class, 'addMember'])->name('tasks.addMember');
@@ -158,31 +159,32 @@ Route::middleware(['web', 'checkLogin'])->group(function () {
         Route::post('/update-member-role', [TaskControllerMain::class, 'updateMemberRole'])->name('tasks.updateMemberRole');
         Route::post('/deletemember', [TaskControllerMain::class, 'deleteMember'])->name('tasks.deleteProjectMember');
         Route::get('/{TaskId}/members', [TaskControllerMain::class, 'getTaskMembers']);
-    
+
         // Place the dynamic project route at the end
         Route::get('/{ProjectId}', [TaskControllerMain::class, 'tasksWithProject'])->name('tasks.tasksWithProject');
     });
-    
+
     // Route cho Subtask
     Route::prefix('subtask')->group(function () {
         Route::get('/', [SubtaskControllerMain::class, 'index'])->name('subtask.index');
-        Route::get('/subtasklist', [SubtaskControllerMain::class,'list'])->name('subtask.subtasklist');
-        Route::get('/dash', [SubtaskControllerMain::class,'dash'])->name('subtask.dash');
+        Route::get('/subtasklist', [SubtaskControllerMain::class, 'list'])->name('subtask.subtasklist');
+        Route::get('/dash', [SubtaskControllerMain::class, 'dash'])->name('subtask.dash');
         Route::get('/detail/{id}', [SubtaskControllerMain::class, 'detail'])->name('subtask.detail');
-        Route::get('/add-subtask', [SubtaskControllerMain::class,'addsubtask'])->name('subtask.addSubtask');
-        Route::post('/create', [SubtaskControllerMain::class,'store'])->name('subtask.create');
+        Route::get('/add-subtask', [SubtaskControllerMain::class, 'addsubtask'])->name('subtask.addSubtask');
+        Route::post('/create', [SubtaskControllerMain::class, 'store'])->name('subtask.create');
         Route::post('/update-field', [SubtaskControllerMain::class, 'updateField'])->name('subtask.updateField');
         Route::post('/complete', [SubtaskControllerMain::class, 'complete'])->name('subtask.complete');
-
-        Route::get('/{TaskId}', [SubtaskControllerMain::class,'subtasksWithTask'])->name('subtask.subtasksWithTask');
-
+        Route::post('/update/{SubtaskId}', [SubtaskControllerMain::class, 'update'])->name('subtask.update');
+        Route::get('/edit/{SubtaskId}', [SubtaskControllerMain::class, 'edit'])->name('subtask.edit');
+        Route::delete('/{id}', [SubtaskControllerMain::class, 'destroy'])->name('subtask.delete');
+        Route::get('/{TaskId}', [SubtaskControllerMain::class, 'subtasksWithTask'])->name('subtask.subtasksWithTask');
     });
 
     // Route cho Logout
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfileController::class,'index'])->name('profile.me');
+        Route::get('/', [ProfileController::class, 'index'])->name('profile.me');
     });
 });
 
@@ -199,8 +201,20 @@ Route::prefix('auth')->name('auth.')->group(function () {
 
     Route::get('reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('resetpass');
     Route::post('resetpassword', [AuthController::class, 'resetPassword'])->name('resetpassword');
+
+    Route::get('/accessdenied', [AuthController::class,'accessdenied'])->name('accessdenied');
 });
 
+
+
+Route::middleware(['web', 'checkAdmin'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+        Route::get('/projects', [AdminController::class, 'allProjects'])->name('admin.projects');
+        Route::get('/tasks', [AdminController::class, 'allTasks'])->name('admin.tasks');
+        Route::get('/subtasks', [AdminController::class, 'allSubtasks'])->name('admin.subtasks');
+    });
+});
 
 // ------------------------API-------------------------------------------------------------
 // Route::prefix('api')->group(function () {

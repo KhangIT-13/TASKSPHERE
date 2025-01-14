@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+    public function accessdenied(){
+        return view("auth.accessdenied");
+    }
     // Hiển thị form đăng nhập
     public function showLoginForm()
     {
@@ -32,6 +35,14 @@ class AuthController extends Controller
 
         // Kiểm tra thông tin đăng nhập
         if (Auth::attempt(['Email' => $request->email, 'password' => $request->password])) {
+
+            // Kiểm tra xem người dùng đã đăng nhập và có vai trò 'admin' không
+            if (Auth::check() && Auth::user()->Role == 'Admin') {
+                // Nếu là admin, chuyển hướng đến route admin.index
+                return redirect()->route('admin.index');
+            }
+
+
             return redirect()->intended('home'); // Đăng nhập thành công, chuyển hướng đến trang dashboard
         }
 
@@ -118,7 +129,7 @@ class AuthController extends Controller
 
         return view('auth.reset-password', ['token' => $token]);
     }
-    
+
     public function resetPassword(Request $request)
     {
         // dd($request->all());

@@ -1,4 +1,5 @@
-@extends('layout.app')
+@extends('admin.layout')
+
 @section('css')
     <!-- Favicon icon -->
     <link rel="icon" href="..\files\assets\images\favicon.ico" type="image/x-icon">
@@ -68,11 +69,11 @@
                 <div class="card-block">
                     <div class="row align-items-center">
                         <div class="col">
-                            <p class="m-b-5">Thông báo</p>
-                            <h4 class="m-b-0">{{ $notifications->count() }}</h4>
+                            <p class="m-b-5">Người dùng</p>
+                            <h4 class="m-b-0">{{ $users->count() }}</h4>
                         </div>
                         <div class="col col-auto text-right">
-                            <i class="feather icon-bell f-50 text-c-blue"></i>
+                            <i class="feather icon-user f-50 text-c-blue"></i>
                         </div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Dự án</h4>
-                    <span>Dưới đây là các dự án của bạn</span>
+                    {{-- <span>Dưới đây là các dự án của bạn</span> --}}
 
                 </div>
                 <div class="card-block table-border-style">
@@ -131,67 +132,23 @@
         <div class="col-xl-4 col-md-12">
             <div class="card feed-card">
                 <div class="card-header">
-                    <h5>Thông báo</h5>
+                    <h5>Người dùng</h5>
                 </div>
                 <div class="card-block">
-                    @foreach ($notifications->slice(0, 5) as $noti)
+                    @foreach ($users->slice(0, 5) as $user)
                         <div class="row m-b-30">
                             <div class="col-auto p-r-0" style="display: flex; align-item: center;">
                                 <i class="feather icon-bell bg-simple-c-blue feed-icon"></i>
                             </div>
                             <div class="col">
-                                <h6 class="m-b-5">{{ $noti->Message }}
-                                    <span class="text-muted f-right f-13">
-                                        {{ \Carbon\Carbon::parse($noti->CreatedAt)->diffForHumans() }}
-                                    </span>
+                                <h6 class="m-b-5">{{ $user->FullName }}
+                                    {{-- <span class="text-muted f-right f-13">
+                                        {{ \Carbon\Carbon::parse($user->CreatedAt)->diffForHumans() }}
+                                    </span> --}}
                             </div>
                         </div>
                     @endforeach
-                    {{-- <div class="row m-b-30">
-                        <div class="col-auto p-r-0">
-                            <i class="feather icon-bell bg-simple-c-blue feed-icon"></i>
-                        </div>
-                        <div class="col">
-                            <h6 class="m-b-5">You have {{ $notiCount }} pending tasks. <span
-                                    class="text-muted f-right f-13">Just
-                                    Now</span></h6>
-                        </div>
-                    </div>
-                    <div class="row m-b-30">
-                        <div class="col-auto p-r-0">
-                            <i class="feather icon-shopping-cart bg-simple-c-pink feed-icon"></i>
-                        </div>
-                        <div class="col">
-                            <h6 class="m-b-5">New order received <span class="text-muted f-right f-13">Just Now</span></h6>
-                        </div>
-                    </div>
-                    <div class="row m-b-30">
-                        <div class="col-auto p-r-0">
-                            <i class="feather icon-file-text bg-simple-c-green feed-icon"></i>
-                        </div>
-                        <div class="col">
-                            <h6 class="m-b-5">You have 3 pending tasks. <span class="text-muted f-right f-13">Just
-                                    Now</span></h6>
-                        </div>
-                    </div>
-                    <div class="row m-b-30">
-                        <div class="col-auto p-r-0">
-                            <i class="feather icon-shopping-cart bg-simple-c-pink feed-icon"></i>
-                        </div>
-                        <div class="col">
-                            <h6 class="m-b-5">New order received <span class="text-muted f-right f-13">Just Now</span>
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="row m-b-30">
-                        <div class="col-auto p-r-0">
-                            <i class="feather icon-file-text bg-simple-c-green feed-icon"></i>
-                        </div>
-                        <div class="col">
-                            <h6 class="m-b-5">You have 3 pending tasks. <span class="text-muted f-right f-13">Just
-                                    Now</span></h6>
-                        </div>
-                    </div> --}}
+                    
                 </div>
             </div>
         </div>
@@ -269,54 +226,7 @@
 
                                     </tr>
                                 @endforeach
-                                {{-- <tr>
-                                    <td><label class="label label-primary">progress</label></td>
-                                    <td>Loosing control on server</td>
-                                    <td>Support</td>
-                                    <td>Yesterday</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-danger">closed</label></td>
-                                    <td>Authorizations keys</td>
-                                    <td>Support</td>
-                                    <td>27, Aug</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-success">open</label></td>
-                                    <td>Restoring default settings</td>
-                                    <td>Support</td>
-                                    <td>Today 9:00</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-primary">progress</label></td>
-                                    <td>Loosing control on server</td>
-                                    <td>Support</td>
-                                    <td>Yesterday</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-success">open</label></td>
-                                    <td>Restoring default settings</td>
-                                    <td>Support</td>
-                                    <td>Today 9:00</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-danger">closed</label></td>
-                                    <td>Authorizations keys</td>
-                                    <td>Support</td>
-                                    <td>27, Aug</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-success">open</label></td>
-                                    <td>Restoring default settings</td>
-                                    <td>Support</td>
-                                    <td>Today 9:00</td>
-                                </tr>
-                                <tr>
-                                    <td><label class="label label-primary">progress</label></td>
-                                    <td>Loosing control on server</td>
-                                    <td>Support</td>
-                                    <td>Yesterday</td>
-                                </tr> --}}
+                               
                             </tbody>
                         </table>
                         <div class="text-right m-r-20">
@@ -330,15 +240,7 @@
             <div class="card latest-update-card">
                 <div class="card-header">
                     <h5>Nhiệm vụ</h5>
-                    {{-- <div class="card-header-right">
-                        <ul class="list-unstyled card-option">
-                            <li><i class="fa fa-tasks"></i></li>
-                            <li><i class="fa fa-window-maximize full-card"></i></li>
-                            <li><i class="fa fa-minus minimize-card"></i></li>
-                            <li><i class="fa fa-refresh reload-card"></i></li>
-                            <li><i class="fa fa-trash close-card"></i></li>
-                        </ul>
-                    </div> --}}
+                    
                 </div>
                 <div class="card-block">
                     <div class="latest-update-box">
@@ -372,75 +274,7 @@
                                 </div>
                             </div>
                         @endforeach
-                        {{-- <div class="row p-b-30">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline">2 hrs ago </p>
-                                <i class="feather bg-info update-icon"><i class="fa fa-tasks"></i></i>
-                            </div>
-                            <div class="col">
-                                <h6>+ 1652 Followers </h6>
-                                <p class="text-muted m-b-0">You’re getting more and more followers, keep it up! </p>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="row p-b-30">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline">4 hrs ago</p>
-                                <i class="feather  bg-simple-c-pink update-icon"></i>
-                            </div>
-                            <div class="col">
-                                <h6>+ 5 New Products were added!</h6>
-                                <p class="text-muted m-b-0">Congratulations!</p>
-                            </div>
-                        </div>
-                        <div class="row p-b-30">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline">1 day ago</p>
-                                <i class="feather bg-simple-c-yellow  update-icon"><i class="fa fa-tasks"></i></i>
-                            </div>
-                            <div class="col">
-                                <h6>Database backup completed!</h6>
-                                <p class="text-muted m-b-0">Download the <span class="text-c-blue">latest backup</span>.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row p-b-0">
-                            <div class="col-auto text-right update-meta">
-                                <p class="text-muted m-b-0 d-inline">2 day ago</p>
-                                <i class="feather icon-facebook bg-simple-c-green update-icon"></i>
-                            </div>
-                            <div class="col">
-                                <h6>+2 Friend Requests</h6>
-                                <p class="text-muted m-b-10">This is great, keep it up!</p>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <td class="b-none">
-                                                <a href="#!" class="align-middle">
-                                                    <img src="..\files\assets\images\avatar-2.jpg" alt="user image"
-                                                        class="img-radius img-40 align-top m-r-15">
-                                                    <div class="d-inline-block">
-                                                        <h6>Jeny William</h6>
-                                                        <p class="text-muted m-b-0">Graphic Designer</p>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="b-none">
-                                                <a href="#!" class="align-middle">
-                                                    <img src="..\files\assets\images\avatar-1.jpg" alt="user image"
-                                                        class="img-radius img-40 align-top m-r-15">
-                                                    <div class="d-inline-block">
-                                                        <h6>John Deo</h6>
-                                                        <p class="text-muted m-b-0">Web Designer</p>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> --}}
+                        
                     </div>
                     <div class="text-center">
                         <a href="#!" class="b-b-primary text-primary">Xem tất cả nhiệm vụ</a>

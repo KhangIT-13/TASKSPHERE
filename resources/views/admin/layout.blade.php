@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title')</title>
+    <title>Admin-@yield('title')</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 10]>
@@ -535,14 +535,32 @@
                                     </ul>
                                 </li> --}}
                                 <li class="">
-                                    <a href="{{ route('home') }}">
+                                    <a href="{{ route('admin.index') }}">
                                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Trang chủ</span>
                                     </a>
                                 </li>
-                                <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
+                                <li class="">
+                                    <a href="{{ route('admin.projects') }}">
                                         <span class="pcoded-micon"><i class="feather icon-folder"></i></span>
+                                        <span class="pcoded-mtext">Quản lý dự án</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{ route('admin.tasks') }}">
+                                        <span class="pcoded-micon"><i class="feather icon-list"></i></span>
+                                        <span class="pcoded-mtext">Quản lý công việc</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{ route('admin.subtasks') }}">
+                                        <span class="pcoded-micon"><i class="feather icon-file"></i></span>
+                                        <span class="pcoded-mtext">Quản lý nhiệm vụ</span>
+                                    </a>
+                                </li>
+                                {{-- <li class="pcoded-hasmenu">
+                                    <a href="javascript:void(0)">
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Dự án</span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -561,7 +579,7 @@
                                 </li>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-list"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Công việc</span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -580,7 +598,7 @@
                                 </li>
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
-                                        <span class="pcoded-micon"><i class="feather icon-file"></i></span>
+                                        <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                                         <span class="pcoded-mtext">Nhiệm vụ</span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -595,7 +613,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 {{-- <li class="">
                                     <a href="{{ route('subtask.index') }}">
                                         <span class="pcoded-micon"><i class="feather icon-home"></i></span>

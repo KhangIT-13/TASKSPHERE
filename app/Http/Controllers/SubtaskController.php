@@ -75,8 +75,45 @@ class SubtaskController extends Controller
         // Redirect hoặc trả về thông báo thành công
         return redirect()->route('subtask.index')->with('success', 'Subtask đã được thêm thành công!');
     }
-    public function edit() {}
-    public function update(Request $request, Subtask $subtask) {}
+    public function edit($subtaskId)
+    {
+        $subtask = Subtask::with('task.project')->find($subtaskId);
+        $task = Task::find($subtask->task->TaskId);
+        $members = $task->assignedUsers()->get();
+        // dd($subtask);
+        return view('subtask.subtask-edit', compact('subtask', 'members'));
+    }
+    public function update(Request $request, $subtaskId)
+    {
+        // Validate input data
+        $validatedData = $request->validate([
+            'SubTaskName' => 'required|string|max:255',
+            'Description' => 'nullable|string',
+            'TaskId' => 'required|exists:tasks,TaskId', // TaskId phải tồn tại trong bảng tasks
+            'member' => 'nullable|exists:users,UserId', // ID của thành viên phải hợp lệ
+            'StartDate' => 'required|date',
+            'DueDate' => 'required|date|after_or_equal:StartDate',
+            'Priority' => 'required|in:High,Medium,Low',
+        ]);
+
+        // Tìm subtask bằng ID
+        $subtask = Subtask::findOrFail($subtaskId);
+
+        // Cập nhật thông tin subtask
+        $subtask->update([
+            'SubTaskName' => $validatedData['SubTaskName'],
+            'Description' => $validatedData['Description'],
+            'TaskId' => $validatedData['TaskId'],
+            'AssignedTo' => $validatedData['member'] ?? null,
+            'StartDate' => $request->input('StartDate'),
+            'DueDate' => $request->input('DueDate'),
+            'Priority' => $validatedData['Priority'],
+        ]);
+
+        // Redirect hoặc trả về thông báo thành công
+        return redirect()->route('subtask.index')->with('success', 'Subtask đã được cập nhật thành công!');
+    }
+
 
     public function updateField(Request $request)
     {
@@ -114,5 +151,15 @@ class SubtaskController extends Controller
             'completed_at' => $subtask->CompletedAt,
             'status' => $subtask->Status
         ]);
+    }
+
+    public function destroy($subtaskId)
+    {
+        try {
+            Subtask::find($subtaskId)->delete();
+            return response()->json(['message' => 'Đã xóa thành công']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => "Không thể xóa!"], 404);
+        }
     }
 }

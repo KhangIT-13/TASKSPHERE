@@ -13,7 +13,7 @@ class CheckLogin
         if (!Auth::check()) {
             return redirect()->route('auth.login');
         }
-
+        
         return $next($request);
     }
 }

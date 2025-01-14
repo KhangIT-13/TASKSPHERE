@@ -35,7 +35,8 @@ class TaskController extends Controller
         $tasks = Task::with('project', 'taskAssignments')->where('ProjectId', $projectId)->get();
         return view('task.task-list', compact('tasks'));
     }
-    public function getTaskMembers($TaskId){
+    public function getTaskMembers($TaskId)
+    {
         $task = Task::find($TaskId);
         $members = $task->assignedUsers()->get();
         // dd($members);
@@ -127,7 +128,7 @@ class TaskController extends Controller
 
         // Chuẩn bị danh sách người dùng (bao gồm người dùng hiện tại) để gán vào task
         $assignments = [];
-    
+
 
         // Kiểm tra nếu có các thành viên khác được gán
         if (!empty($validated['members'])) {
@@ -176,13 +177,18 @@ class TaskController extends Controller
 
     public function destroy($taskId)
     {
-        $task = Task::findOrFail($taskId);
-        $task->subtasks()->delete();
-        $task->taskfiles()->delete();
-        $task->taskComments()->delete();
-        $task->delete();
+        try {
+            $task = Task::findOrFail($taskId);
+            $task->subtasks()->delete();
+            // $task->taskfiles()->delete();
+            // $task->taskComments()->delete();
+            $task->delete();
 
-        return redirect()->route('task.index', ['projectId' => $task->ProjectId]);
+            return response()->json(['message' => 'Dự án đã được xóa thành công']);
+        } catch (\Exception $e) {
+            // dd($e->getMessage());
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     public function members($TaskId)

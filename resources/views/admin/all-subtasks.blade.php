@@ -1,26 +1,29 @@
-@extends('layout.app')
+@extends('admin.layout')
+
 @section('title', 'Danh sách công việc')
 @section('css')
-    <link rel="icon" href="..\files\assets\images\favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ asset('files/assets/images/favicon.ico') }}" type="image/x-icon">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="..\files\bower_components\bootstrap\css\bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/bower_components/bootstrap/css/bootstrap.min.css') }}">
     <!-- themify-icons line icon -->
-    <link rel="stylesheet" type="text/css" href="..\files\assets\icon\themify-icons\themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/assets/icon/themify-icons/themify-icons.css') }}">
     <!-- ico font -->
-    <link rel="stylesheet" type="text/css" href="..\files\assets\icon\icofont\css\icofont.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/assets/icon/icofont/css/icofont.css') }}">
     <!-- feather Awesome -->
-    <link rel="stylesheet" type="text/css" href="..\files\assets\icon\feather\css\feather.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/assets/icon/feather/css/feather.css') }}">
     <!-- Data Table Css -->
     <link rel="stylesheet" type="text/css"
-        href="..\files\bower_components\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="..\files\assets\pages\data-table\css\buttons.dataTables.min.css">
+        href="{{ asset('files/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="..\files\bower_components\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
+        href="{{ asset('files/assets/pages/data-table/css/buttons.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('files/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
     <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="..\files\assets\css\style.css">
-    <link rel="stylesheet" type="text/css" href="..\files\assets\css\jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('files/assets/css/jquery.mCustomScrollbar.css') }}">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @endsection
@@ -210,39 +213,45 @@
 
 @section('scripts')
     <!-- Required Jquery -->
-    <script type="text/javascript" src="..\files\bower_components\jquery\js\jquery.min.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\jquery-ui\js\jquery-ui.min.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\popper.js\js\popper.min.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\bootstrap\js\bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/jquery/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/popper.js/js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="..\files\bower_components\jquery-slimscroll\js\jquery.slimscroll.js"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}">
+    </script>
     <!-- modernizr js -->
-    <script type="text/javascript" src="..\files\bower_components\modernizr\js\modernizr.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\modernizr\js\css-scrollbars.js"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/modernizr/js/modernizr.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
     <!-- data-table js -->
-    <script src="..\files\bower_components\datatables.net\js\jquery.dataTables.min.js"></script>
-    <script src="..\files\bower_components\datatables.net-buttons\js\dataTables.buttons.min.js"></script>
-    <script src="..\files\assets\pages\data-table\js\jszip.min.js"></script>
-    <script src="..\files\assets\pages\data-table\js\pdfmake.min.js"></script>
-    <script src="..\files\assets\pages\data-table\js\vfs_fonts.js"></script>
-    <script src="..\files\bower_components\datatables.net-buttons\js\buttons.print.min.js"></script>
-    <script src="..\files\bower_components\datatables.net-buttons\js\buttons.html5.min.js"></script>
-    <script src="..\files\bower_components\datatables.net-bs4\js\dataTables.bootstrap4.min.js"></script>
-    <script src="..\files\bower_components\datatables.net-responsive\js\dataTables.responsive.min.js"></script>
-    <script src="..\files\bower_components\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('files/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('files/assets/pages/data-table/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('files/assets/pages/data-table/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('files/assets/pages/data-table/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('files/bower_components/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}">
+    </script>
     <!-- i18next.min.js -->
-    <script type="text/javascript" src="..\files\bower_components\i18next\js\i18next.min.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\i18next-xhr-backend\js\i18nextXHRBackend.min.js"></script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/i18next/js/i18next.min.js') }}"></script>
     <script type="text/javascript"
-        src="..\files\bower_components\i18next-browser-languagedetector\js\i18nextBrowserLanguageDetector.min.js"></script>
-    <script type="text/javascript" src="..\files\bower_components\jquery-i18next\js\jquery-i18next.min.js"></script>
+        src="{{ asset('files/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
+    <script type="text/javascript"
+        src="{{ asset('files/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}">
+    </script>
+    <script type="text/javascript" src="{{ asset('files/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}">
+    </script>
     <!-- Custom js -->
-    <script src="..\files\assets\pages\data-table\js\data-table-custom.js"></script>
+    <script src="{{ asset('files/assets/pages/data-table/js/data-table-custom.js') }}"></script>
 
-    <script src="..\files\assets\js\pcoded.min.js"></script>
-    <script src="..\files\assets\js\vartical-layout.min.js"></script>
-    <script src="..\files\assets\js\jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript" src="..\files\assets\js\script.js"></script>
+    <script src="{{ asset('files/assets/js/pcoded.min.js') }}"></script>
+    <script src="{{ asset('files/assets/js/vartical-layout.min.js') }}"></script>
+    <script src="{{ asset('files/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('files/assets/js/script.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             // Khi thay đổi trạng thái
